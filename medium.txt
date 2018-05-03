@@ -1,0 +1,24 @@
+https://medium.com/bucharestjs/upgrading-a-create-react-app-project-to-a-ssr-code-splitting-setup-9da57df2040a
+
+1º rodar o yarn build para gerar os arquivos de produção, pois o node server/bootstrap lê os arquivos dessa pasta.
+2º rodar o NODE_ENV=development node server/bootstrap
+
+Vamos adicionar o code split para caregar os arquivos só quando precisar, 
+pois o default do React é carregar tudo de uma única vez.
+
+Poderiamos usar o async component do React, mas vamos usar a lib react-loadable.
+
+Após dar um yarn add react-loadable
+
+Tem que ir no arquivo bootstrap.js e adicionar os presets
+
+require('babel-register')({
+    ignore: [ /(node_modules)/ ],
+    presets: ['es2015', 'react-app'],
+    plugins: [
+        'syntax-dynamic-import',
+        'dynamic-import-node',
+        'react-loadable/babel'
+    ]
+});
+
